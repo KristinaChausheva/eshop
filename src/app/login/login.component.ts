@@ -8,9 +8,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
+ 
   constructor(private afAuth: AngularFireAuth) { 
-    afAuth.authState.subscribe(x =>console.log(x));
   }
 
   login() {
