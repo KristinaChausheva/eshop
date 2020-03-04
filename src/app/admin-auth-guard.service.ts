@@ -9,19 +9,14 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminAuthGuardService implements CanActivate{
+export class AdminAuthGuardService implements CanActivate {
 
-  constructor(private auth:AuthService, private userService: UserService) { }
+  constructor(public auth: AuthService, public userService: UserService) { }
 
   canActivate(): Observable<boolean> {
-    return this.auth.user$.pipe(
-      switchMap(user => this.userService.get(user.uid).valueChanges()),
-      map (appUser => appUser.isAdmin)
-    )
-    // return this.auth.user$
-    //   .pipe(switchMap(user => this.userService.get(user.uid).valueChanges()))
-    //   .pipe(map(appUser => appUser.isAdmin));
-      //.subscribe(x => console.log(x));
+    return this.auth.appUser$.pipe(
+        map(appUser => appUser.isAdmin) // Mapping App user observable to a boolean observable
+    );
   }
 }
   

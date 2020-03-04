@@ -8,16 +8,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
+  constructor(private db: AngularFireDatabase) { }
 
-  constructor(private db:AngularFireDatabase) {
-
-  }
-
-  save(user:firebase.User) {
-    this.db.object('/user/' + user.uid).update({
+  save(user: firebase.User) {
+    // Using update() not set() to avoid overwriting everytime the user logins
+    this.db.object('/users/' + user.uid).update({
       name: user.displayName,
-      email: user.email,
-    })
+      email: user.email
+    });
   }
 
   get(uid: string): Observable<AppUser> {

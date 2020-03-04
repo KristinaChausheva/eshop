@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 //import { AngularFireAuth } from 'angularfire2/auth';
 //import * as firebase from 'firebase';
 //import { Observable } from 'rxjs/Observable';
+import { AppUser } from '../models/app-user';
 
 @Component({
   selector: 'app-bs-navbar',
@@ -10,15 +11,14 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./bs-navbar.component.css']
 })
 export class BsNavbarComponent {
-  //user$: Observable<firebase.User>;
+  appUser: AppUser;
 
-  constructor(public auth: AuthService) { 
-    //this.user$ = auth.authState;
-    
+  constructor(private auth: AuthService) {
+    auth.appUser$
+      .subscribe(appUser => this.appUser = appUser); // Subscribing here to avoid using the async pipe in the html template that causes infinite loop
   }
 
   logout() {
     this.auth.logout();
-    //this.afAuth.auth.signOut();
   }
 }
