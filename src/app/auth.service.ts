@@ -12,6 +12,7 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth) {
     this.user$ = afAuth.authState;
+    
    }
 
   login() {
